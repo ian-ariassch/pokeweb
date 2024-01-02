@@ -1,6 +1,8 @@
 "use client"
 import { QueryClient, QueryClientProvider } from "react-query"
 import Home from "./home"
+import { Header } from "@/components/header"
+import { useState } from "react"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,10 +25,19 @@ const queryClient = new QueryClient({
 })
 
 export default function App() {
+  const [term, setTerm] = useState("")
+
+  function onSearchBarChange(e: any) {
+    console.log(e.target.value)
+
+    setTerm(e.target.value)
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
+      <Header onSearchChange={onSearchBarChange} />
       <main>
-        <Home />
+        <Home term={term} />
       </main>
     </QueryClientProvider>
   )
