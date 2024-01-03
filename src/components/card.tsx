@@ -2,6 +2,7 @@ import { useTheme } from "@/hooks/use-theme"
 import { firstUppercase } from "@/utils"
 import { specialPokemonNames } from "@/utils/constants"
 import Image from "next/image"
+import { useState } from "react"
 
 interface CardProps {
   pokemonName: string
@@ -10,6 +11,8 @@ interface CardProps {
 
 export function PokeCard(props: CardProps) {
   const { pokemonId, pokemonName } = props
+
+  const [wasClicked, setWasClicked] = useState(false)
 
   const theme = useTheme()
 
@@ -21,7 +24,7 @@ export function PokeCard(props: CardProps) {
 
   return (
     <div
-      className={`card card-compact w-48 shadow-xl rounded-xl overflow-hidden ${backgroundColor}`}
+      className={`card card-compact w-48 shadow-xl rounded-xl overflow-hidden ${backgroundColor} hover:scale-90 transition-all duration-200 ease-in-out`}
     >
       <figure>
         <Image

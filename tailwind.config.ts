@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
 const config: Config = {
   content: [
@@ -8,10 +8,23 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        "scale-up-down": "scale-up-down 0.25s ease-in-out",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      colors: {
+        "base-400": "var(--base-400)",
+      },
+      keyframes: {
+        "scale-up-down": {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(0.9)" },
+          "100%": { transform: "scale(1)" },
+        },
       },
     },
   },
@@ -37,6 +50,7 @@ const config: Config = {
           accent: "#e11d48",
           neutral: "#474151",
           "base-100": "#1f2937",
+          "--base-400": "#121821",
           info: "#7dd3fc",
           success: "#22c55e",
           warning: "#fdba74",
@@ -46,5 +60,5 @@ const config: Config = {
     ],
   },
   plugins: [require("daisyui")],
-};
-export default config;
+}
+export default config
