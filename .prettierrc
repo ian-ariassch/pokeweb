@@ -1,0 +1,9 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 80,
+  "semi": false,
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-classnames"],
+  "customAttributes": ["className"],
+  "customFunctions": ["classNames"]
+}

@@ -12,8 +12,6 @@ interface CardProps {
 export function PokeCard(props: CardProps) {
   const { pokemonId, pokemonName } = props
 
-  const [wasClicked, setWasClicked] = useState(false)
-
   const theme = useTheme()
 
   const pokemonImage = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`
@@ -24,7 +22,8 @@ export function PokeCard(props: CardProps) {
 
   return (
     <div
-      className={`card card-compact w-48 shadow-xl rounded-xl overflow-hidden ${backgroundColor} hover:scale-90 transition-all duration-200 ease-in-out`}
+      className={`card card-compact w-48 shadow-xl rounded-xl overflow-hidden ${backgroundColor}
+        hover:scale-95 transition-all duration-200 ease-in-out hover:bg-base-400`}
     >
       <figure>
         <Image
