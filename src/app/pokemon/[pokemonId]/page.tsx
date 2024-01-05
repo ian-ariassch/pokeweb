@@ -1,6 +1,7 @@
 "use client"
-import Image from "next/image"
+import Link from "next/link"
 import { useQuery } from "react-query"
+import { PokeDetailsCard } from "./details-card"
 
 interface PokeDetailsProps {
   pokemonId: number
@@ -18,11 +19,17 @@ interface PokeDetailsResponse {
         "black-white": {
           animated: {
             front_default: string
+            back_default: string
           }
         }
       }
     }
   }
+  types: {
+    type: {
+      name: string
+    }
+  }[]
 }
 
 export default function PokeDetails(props: PokeDetailsParams) {
@@ -33,29 +40,49 @@ export default function PokeDetails(props: PokeDetailsParams) {
   ])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return (
+      <>
+        <header className="flex items-center justify-start header bg-accent h-16 px-8">
+          <h1 className="text-3xl font-bold text-secondary m-0">
+            <Link href="/">PokeWeb</Link>
+          </h1>
+        </header>
+        <div>Loading...</div>
+      </>
+    )
   }
 
   if (isError) {
     return <div>Error</div>
   }
 
+  const types = data!.types.map((type) => type.type.name)
+
+  const name = data!.name
+
+  const image =
+    data!.sprites.versions["generation-v"]["black-white"].animated.front_default
+
   return (
     <>
-      <header className="flex items-center justify-center header bg-accent h-16 px-8" />
-      <div>
-        <h1>Pokemon Details</h1>
-        <p>{data!.name}</p>
-        <Image
-          src={
-            data!.sprites.versions["generation-v"]["black-white"].animated
-              .front_default
-          }
-          alt={data!.name}
-          width={200}
-          height={200}
-        />
-      </div>
+      <header className="flex items-center justify-start header bg-accent h-16 px-8 w-screen">
+        <h1 className="text-3xl font-bold m-0">
+          <Link className="text-base-content" href="/">
+            PokeWeb
+          </Link>
+        </h1>
+      </header>
+      <main className="px-32 py-16">
+        <div
+          id="gridContainer"
+          className="grid grid-cols-[1fr,3fr] gap-8 [&>*]:rounded-xl"
+        >
+          <PokeDetailsCard name={name} image={image} types={types} />
+          <div id="stats" className="bg-base-300">
+            <h1>Stats</h1>
+          </div>
+        </div>
+      </main>
     </>
   )
 }
