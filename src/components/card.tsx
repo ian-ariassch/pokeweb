@@ -2,15 +2,16 @@ import { useTheme } from "@/hooks/use-theme"
 import { firstUppercase } from "@/utils"
 import { specialPokemonNames } from "@/utils/constants"
 import Image from "next/image"
-import { useState } from "react"
+import Link from "next/link"
 
 interface CardProps {
   pokemonName: string
   pokemonId: number
+  onClick?: () => void
 }
 
 export function PokeCard(props: CardProps) {
-  const { pokemonId, pokemonName } = props
+  const { pokemonId, pokemonName, onClick } = props
 
   const theme = useTheme()
 
@@ -21,28 +22,31 @@ export function PokeCard(props: CardProps) {
   const parsedPokemonName = specialPokemonNames[pokemonName] || pokemonName
 
   return (
-    <div
-      className={`card card-compact w-48 shadow-xl rounded-xl overflow-hidden ${backgroundColor}
-        hover:scale-95 transition-all duration-200 ease-in-out hover:bg-base-400`}
-    >
-      <figure>
-        <Image
-          sizes="100vw"
-          src={pokemonImage}
-          alt={pokemonName}
-          style={{
-            width: "100%",
-            height: "auto",
-          }}
-          width={1}
-          height={1}
-        ></Image>
-      </figure>
-      <div className="card-body bg-primary">
-        <h2 className="card-title justify-center">
-          {firstUppercase(parsedPokemonName)}
-        </h2>
+    <Link href={`/pokemon/${pokemonId}`}>
+      <div
+        className={`card card-compact w-48 shadow-xl rounded-xl overflow-hidden ${backgroundColor}
+          hover:scale-95 transition-all duration-200 ease-in-out hover:bg-base-400`}
+        onClick={onClick}
+      >
+        <figure>
+          <Image
+            sizes="100vw"
+            src={pokemonImage}
+            alt={pokemonName}
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            width={1}
+            height={1}
+          ></Image>
+        </figure>
+        <div className="card-body bg-primary">
+          <h2 className="card-title justify-center">
+            {firstUppercase(parsedPokemonName)}
+          </h2>
+        </div>
       </div>
-    </div>
+    </Link>
   )
 }

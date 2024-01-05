@@ -1,7 +1,3 @@
-interface SearchBarProps {
-  onSearchChange: (e: any) => void
-}
-
 interface HeaderProps {
   onSearchChange: (e: any) => void
 }
