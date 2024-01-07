@@ -1,4 +1,4 @@
-export const maxPokemon = 1000
+export const maxPokemon = process.env.NEXT_PUBLIC_MAX_POKEMON ?? 151
 
 export const specialPokemonNames: Record<string, string> = {
   "mr-mime": "Mr. Mime",
