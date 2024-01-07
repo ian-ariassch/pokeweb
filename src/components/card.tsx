@@ -24,8 +24,9 @@ export function PokeCard(props: CardProps) {
   return (
     <Link href={`/pokemon/${pokemonId}`}>
       <div
-        className={`card card-compact w-48 shadow-xl rounded-xl overflow-hidden ${backgroundColor}
-          hover:scale-95 transition-all duration-200 ease-in-out hover:bg-base-400`}
+        className={`card card-compact w-28 lg:w-48 shadow-xl rounded-xl overflow-hidden
+          ${backgroundColor} hover:scale-95 transition-all duration-200 ease-in-out
+          hover:bg-base-400`}
         onClick={onClick}
       >
         <figure>
@@ -42,9 +43,9 @@ export function PokeCard(props: CardProps) {
           ></Image>
         </figure>
         <div className="card-body bg-primary">
-          <h2 className="card-title justify-center">
+          <span className="card-title justify-center text-sm lg:text-xl">
             {firstUppercase(parsedPokemonName)}
-          </h2>
+          </span>
         </div>
       </div>
     </Link>

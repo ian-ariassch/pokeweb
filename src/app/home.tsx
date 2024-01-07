@@ -57,7 +57,7 @@ export default function Home(props: HomeProps) {
   const pokemonToDisplay = term ? filteredPokemon : data?.results
 
   return (
-    <div className="flex flex-wrap items-start justify-center gap-8 py-8 h-full">
+    <div className="flex flex-wrap items-start justify-center gap-4 lg:gap-8 py-8 h-full">
       {pokemonToDisplay!.map(mapPokemonToCard)}
     </div>
   )
