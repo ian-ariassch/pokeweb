@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       animation: {
         "scale-up-down": "scale-up-down 0.25s ease-in-out",
+        "width-from-zero": "width-from-zero 2s forwards",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -47,6 +48,10 @@ const config: Config = {
           "50%": { transform: "scale(0.9)" },
           "100%": { transform: "scale(1)" },
         },
+        "width-from-zero": {
+          "0%": { width: "0%" },
+          "100%": { width: "var(--progress)" },
+        },
       },
     },
   },
@@ -59,6 +64,8 @@ const config: Config = {
           accent: "#e11d48",
           neutral: "#f2f2f2",
           "base-100": "#f2f2f2",
+          "base-200": "#f3f2f1",
+          "base-300": "#e6e6e6",
           "--base-400": "#bfbfbf",
           info: "#7dd3fc",
           success: "#22c55e",
@@ -97,8 +104,6 @@ const config: Config = {
           success: "#22c55e",
           warning: "#fdba74",
           error: "#ef4444",
-          "--zinc-900": "#18181b",
-
           "--bug": "#A8B820",
           "--dark": "#705848",
           "--dragon": "#7038F8",

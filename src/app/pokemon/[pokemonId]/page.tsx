@@ -2,6 +2,7 @@
 import Link from "next/link"
 import { useQuery } from "react-query"
 import { PokeDetailsCard } from "./details-card"
+import { PokeStats } from "./stats"
 
 interface PokeDetailsProps {
   pokemonId: number
@@ -14,6 +15,7 @@ interface PokeDetailsParams {
 interface PokeDetailsResponse {
   name: string
   sprites: {
+    front_default: string
     versions: {
       "generation-v": {
         "black-white": {
@@ -27,6 +29,12 @@ interface PokeDetailsResponse {
   }
   types: {
     type: {
+      name: string
+    }
+  }[]
+  stats: {
+    base_stat: number
+    stat: {
       name: string
     }
   }[]
@@ -61,7 +69,15 @@ export default function PokeDetails(props: PokeDetailsParams) {
   const name = data!.name
 
   const image =
-    data!.sprites.versions["generation-v"]["black-white"].animated.front_default
+    data!.sprites?.versions["generation-v"]["black-white"]?.animated
+      .front_default
+
+  const fallbackImage = data!.sprites?.front_default
+
+  const stats = data!.stats.map((stat) => ({
+    name: stat.stat.name,
+    value: stat.base_stat,
+  }))
 
   return (
     <>
@@ -77,9 +93,19 @@ export default function PokeDetails(props: PokeDetailsParams) {
           id="gridContainer"
           className="grid grid-cols-[1fr,3fr] gap-8 [&>*]:rounded-xl"
         >
-          <PokeDetailsCard name={name} image={image} types={types} />
-          <div id="stats" className="bg-base-300">
-            <h1>Stats</h1>
+          <PokeDetailsCard
+            name={name}
+            image={image ?? fallbackImage}
+            types={types}
+          />
+          <div
+            id="stats"
+            className="bg-base-300 grid grid-cols-[auto_1fr_auto] justify-between items-center w-full
+              px-4 py-2 gap-x-4"
+          >
+            {stats.map((stat) => (
+              <PokeStats key={stat.name} name={stat.name} value={stat.value} />
+            ))}
           </div>
         </div>
       </main>

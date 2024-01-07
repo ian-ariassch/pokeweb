@@ -1,4 +1,4 @@
-export const maxPokemon = 151
+export const maxPokemon = 1000
 
 export const specialPokemonNames: Record<string, string> = {
   "mr-mime": "Mr. Mime",
