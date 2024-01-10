@@ -11,8 +11,10 @@
   "dependencies": {
     "next": "14.0.4",
     "react": "^18",
+    "react-awesome-reveal": "^4.2.7",
     "react-dom": "^18",
-    "react-query": "^3.39.3"
+    "react-query": "^3.39.3",
+    "react-use": "^17.4.2"
   },
   "devDependencies": {
     "@prettier/sync": "^0.3.0",

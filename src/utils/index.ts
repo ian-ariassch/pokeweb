@@ -1,1 +1,1 @@
-export { default as firstUppercase } from "./firstuppercase";
+export { default as humanizeName } from "./humanizeName"

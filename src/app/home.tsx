@@ -22,7 +22,13 @@ interface Pokemon {
 function mapPokemonToCard(pokemon: Pokemon, index: number) {
   const pokemonId = pokemon.id ?? index + 1
 
-  return <PokeCard pokemonName={pokemon.name} pokemonId={pokemonId} />
+  return (
+    <PokeCard
+      key={pokemonId}
+      pokemonName={pokemon.name}
+      pokemonId={pokemonId}
+    />
+  )
 }
 
 export default function Home(props: HomeProps) {

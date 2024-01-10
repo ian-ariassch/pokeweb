@@ -1,6 +1,5 @@
-import { useTheme } from "@/hooks/use-theme"
-import { firstUppercase } from "@/utils"
-import { specialPokemonNames } from "@/utils/constants"
+import { useThemePreference } from "@/hooks/use-theme-preference"
+import { humanizeName } from "@/utils"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -13,13 +12,11 @@ interface CardProps {
 export function PokeCard(props: CardProps) {
   const { pokemonId, pokemonName, onClick } = props
 
-  const theme = useTheme()
+  const theme = useThemePreference()
 
   const pokemonImage = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`
 
   const backgroundColor = theme === "dark" ? "bg-base-300" : "bg-base-200"
-
-  const parsedPokemonName = specialPokemonNames[pokemonName] || pokemonName
 
   return (
     <Link href={`/pokemon/${pokemonId}`}>
@@ -44,7 +41,7 @@ export function PokeCard(props: CardProps) {
         </figure>
         <div className="card-body bg-primary">
           <span className="card-title justify-center text-sm lg:text-xl">
-            {firstUppercase(parsedPokemonName)}
+            {humanizeName(pokemonName)}
           </span>
         </div>
       </div>
