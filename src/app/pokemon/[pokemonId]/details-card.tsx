@@ -1,7 +1,6 @@
 import Image from "next/image"
-import { firstUppercase } from "@/utils"
 import { PokeType } from "./poke-type"
-import { specialPokemonNames } from "@/utils/constants"
+import { humanizeName } from "@/utils"
 
 interface PokeDetailsCardProps {
   name: string
@@ -16,16 +15,14 @@ export function PokeDetailsCard(props: PokeDetailsCardProps) {
 
   const amountOfColumns = isDualType ? "grid-cols-2" : "grid-cols-1"
 
-  const displayName = specialPokemonNames[name] ?? name
-
   return (
     <div
       id="photoAndTypes"
-      className="bg-base-300 flex flex-col items-center justify-between gap-8 h-fit py-6"
+      className="flex flex-col items-center justify-between gap-8 h-fit py-6"
     >
       <div id="nameContainer" className="flex flex-col items-center h-fit">
         <span className="text-3xl font-bold text-base-content">
-          {firstUppercase(displayName)}
+          {humanizeName(name)}
         </span>
       </div>
       <div id="imageContainer" className="relative h-fit px-8">

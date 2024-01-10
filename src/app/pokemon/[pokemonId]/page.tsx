@@ -112,7 +112,8 @@ export default function PokeDetails(props: PokeDetailsParams) {
       <main className="px-6 py-4 lg:px-16 lg:py-8 xl:px-32 xl:py-16">
         <div
           id="gridContainer"
-          className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr,3fr] lg:gap-8 [&>*]:rounded-xl"
+          className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr,3fr] lg:gap-8 [&>*]:rounded-xl
+            [&>*]:bg-base-300"
         >
           <PokeDetailsCard
             name={name}
@@ -121,8 +122,8 @@ export default function PokeDetails(props: PokeDetailsParams) {
           />
           <div
             id="stats"
-            className="bg-base-300 grid grid-cols-[auto_1fr_auto] justify-between items-center w-full
-              px-4 py-2 gap-x-4 gap-y-4 lg:gap-y-0"
+            className="grid grid-cols-[auto_1fr_auto] justify-between items-center w-full px-4 py-2
+              gap-x-4 gap-y-4 lg:gap-y-0"
           >
             {stats.map((stat) => (
               <PokeStats key={stat.name} name={stat.name} value={stat.value} />

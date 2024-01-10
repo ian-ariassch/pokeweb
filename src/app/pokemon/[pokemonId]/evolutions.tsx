@@ -1,5 +1,6 @@
 import { useQuery } from "react-query"
-import Image from "next/image"
+import { Fade } from "react-awesome-reveal"
+import { PokeCircular } from "@/components/circular"
 
 interface PokeEvolutionsProps {
   chainId: string | undefined
@@ -46,28 +47,22 @@ export function PokeEvolutions(props: PokeEvolutionsProps) {
 
   const chain = evolutionData?.chain
 
-  console.log(chain)
-
   const evolutionChains = extractNamesFromChain(chain)
 
-  const evolutionImages = evolutionChains.map((evolutionChain) => {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evolutionChain.id}.png`
-  })
-
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      {evolutionChains.map((evolutionChain, index) => (
-        <div key={index} className="flex items-center justify-center gap-4">
-          <span>{evolutionChain.name}</span>
-          <Image
-            src={evolutionImages[index]}
-            alt={evolutionChain.name}
-            width={100}
-            height={100}
+    <div
+      className="flex flex-col md:flex-row items-center justify-center gap-16 md:gap-24 lg:gap-32
+        xl:gap-64 lg:col-span-2 px-4 py-2"
+    >
+      <Fade direction="left" triggerOnce cascade damping={0.2} className="">
+        {evolutionChains.map((evolutionChain, index) => (
+          <PokeCircular
+            key={index}
+            pokemonName={evolutionChain.name}
+            pokemonId={evolutionChain.id}
           />
-          <span>{">"}</span>
-        </div>
-      ))}
+        ))}
+      </Fade>
     </div>
   )
 }
