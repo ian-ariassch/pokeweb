@@ -2,6 +2,7 @@ import { PokeCard } from "@/components/card"
 import { useQuery } from "react-query"
 import { maxPokemon } from "@/utils/constants"
 import { useEffect, useState } from "react"
+import InfiniteScroll from "react-infinite-scroll-component"
 
 interface PokemonResponse {
   results: {
@@ -34,23 +35,50 @@ function mapPokemonToCard(pokemon: Pokemon, index: number) {
 export default function Home(props: HomeProps) {
   const { term } = props
 
-  const [filteredPokemon, setFilteredPokemon] = useState<Pokemon[]>([])
+  const [displayedPokemon, setDisplayedPokemon] = useState<Pokemon[]>([])
+
+  const [pokemon, setPokemon] = useState<Pokemon[]>([])
+
+  const pokemonPerPage = 30
+
+  const [hasMore, setHasMore] = useState(true)
+
+  const [records, setRecords] = useState<number>(pokemonPerPage)
+
+  const loadMore = () => {
+    if (records >= Number(maxPokemon)) {
+      setHasMore(false)
+      return
+    } else {
+      setTimeout(() => {
+        setRecords(records + pokemonPerPage)
+      })
+    }
+  }
 
   const { data, isLoading, isError } = useQuery<PokemonResponse>([
-    "/pokemon?limit=" + maxPokemon,
+    "/pokemon-species/?limit=" + maxPokemon,
   ])
 
   useEffect(() => {
-    if (data && term) {
-      const localFilteredPokemon = data.results.filter((pokemon, index) => {
-        Object.assign(pokemon, { id: index + 1 })
+    if (data) {
+      if (term) {
+        const localFilteredPokemon = data.results.filter((pokemon, index) => {
+          Object.assign(pokemon, { id: index + 1 })
 
-        return pokemon.name.includes(term.toLowerCase())
-      })
+          return pokemon.name.includes(term.toLowerCase())
+        })
 
-      setFilteredPokemon(localFilteredPokemon)
+        setPokemon(localFilteredPokemon)
+      } else {
+        setPokemon(data.results)
+      }
     }
-  }, [data, term])
+  }, [data, term, records])
+
+  useEffect(() => {
+    setDisplayedPokemon(pokemon.slice(0, records))
+  }, [pokemon, records])
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -60,11 +88,19 @@ export default function Home(props: HomeProps) {
     return <div>Error</div>
   }
 
-  const pokemonToDisplay = term ? filteredPokemon : data?.results
-
   return (
-    <div className="flex flex-wrap items-start justify-center gap-4 lg:gap-8 py-8 h-full">
-      {pokemonToDisplay!.map(mapPokemonToCard)}
-    </div>
+    <InfiniteScroll
+      dataLength={displayedPokemon!.length}
+      hasMore={hasMore}
+      next={loadMore}
+      loader={
+        <div className="loader" key={0}>
+          Loading ...
+        </div>
+      }
+      className="flex flex-wrap items-start justify-center gap-4 lg:gap-8 py-8 h-full"
+    >
+      {displayedPokemon!.map(mapPokemonToCard)}
+    </InfiniteScroll>
   )
 }
