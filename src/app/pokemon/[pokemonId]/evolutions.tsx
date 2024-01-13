@@ -4,6 +4,7 @@ import { PokeCircular } from "@/components/circular"
 
 interface PokeEvolutionsProps {
   chainId: string | undefined
+  pokemonId: number
 }
 
 interface PokeEvolutionChainResponse {
@@ -26,7 +27,7 @@ const extractNamesFromChain = (chain: any) => {
 }
 
 export function PokeEvolutions(props: PokeEvolutionsProps) {
-  const { chainId } = props
+  const { chainId, pokemonId } = props
 
   const {
     data: evolutionData,
@@ -60,6 +61,7 @@ export function PokeEvolutions(props: PokeEvolutionsProps) {
             key={index}
             pokemonName={evolutionChain.name}
             pokemonId={evolutionChain.id}
+            isCurrentPokemon={pokemonId === evolutionChain.id}
           />
         ))}
       </Fade>

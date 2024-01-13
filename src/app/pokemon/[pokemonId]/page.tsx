@@ -50,6 +50,18 @@ interface PokeSpeciesResponse {
   }
 }
 
+function Header() {
+  return (
+    <header className="flex items-center justify-start header bg-primary h-16 px-8 w-full">
+      <h1 className="text-3xl font-bold m-0">
+        <Link className="text-base-content" href="/">
+          PokeWeb
+        </Link>
+      </h1>
+    </header>
+  )
+}
+
 export default function PokeDetails(props: PokeDetailsParams) {
   const { pokemonId } = props.params
 
@@ -69,11 +81,7 @@ export default function PokeDetails(props: PokeDetailsParams) {
   if (isLoading || speciesIsLoading) {
     return (
       <>
-        <header className="flex items-center justify-start header bg-accent h-16 px-8">
-          <h1 className="text-3xl font-bold text-secondary m-0">
-            <Link href="/">PokeWeb</Link>
-          </h1>
-        </header>
+        <Header />
         <div>Loading...</div>
       </>
     )
@@ -102,13 +110,7 @@ export default function PokeDetails(props: PokeDetailsParams) {
 
   return (
     <>
-      <header className="flex items-center justify-start header bg-accent h-16 px-8 w-screen">
-        <h1 className="text-3xl font-bold m-0">
-          <Link className="text-base-content" href="/">
-            PokeWeb
-          </Link>
-        </h1>
-      </header>
+      <Header />
       <main className="px-6 py-4 lg:px-16 lg:py-8 xl:px-32 xl:py-16">
         <div
           id="gridContainer"
@@ -129,7 +131,7 @@ export default function PokeDetails(props: PokeDetailsParams) {
               <PokeStats key={stat.name} name={stat.name} value={stat.value} />
             ))}
           </div>
-          <PokeEvolutions chainId={chainId} />
+          <PokeEvolutions chainId={chainId} pokemonId={pokemonId} />
         </div>
       </main>
     </>

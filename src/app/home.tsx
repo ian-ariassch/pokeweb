@@ -93,11 +93,7 @@ export default function Home(props: HomeProps) {
       dataLength={displayedPokemon!.length}
       hasMore={hasMore}
       next={loadMore}
-      loader={
-        <div className="loader" key={0}>
-          Loading ...
-        </div>
-      }
+      loader={<div />}
       className="flex flex-wrap items-start justify-center gap-4 lg:gap-8 py-8 h-full"
     >
       {displayedPokemon!.map(mapPokemonToCard)}
