@@ -3,7 +3,8 @@ import Link from "next/link"
 import { useQuery } from "react-query"
 import { PokeDetailsCard } from "./details-card"
 import { PokeStats } from "./stats"
-import { PokeEvolutions } from "./evolutions"
+import { PokeEvolutionChainResponse, PokeEvolutions } from "./evolutions"
+import { useEffect, useState } from "react"
 
 interface PokeDetailsProps {
   pokemonId: number
@@ -65,6 +66,8 @@ function Header() {
 export default function PokeDetails(props: PokeDetailsParams) {
   const { pokemonId } = props.params
 
+  const [chainId, setChainId] = useState<string | null>(null)
+
   const { data, isLoading, isError } = useQuery<PokeDetailsResponse>([
     "/pokemon/" + pokemonId,
   ])
@@ -78,7 +81,22 @@ export default function PokeDetails(props: PokeDetailsParams) {
     enabled: !!data,
   })
 
-  if (isLoading || speciesIsLoading) {
+  const {
+    data: evolutionData,
+    isLoading: evolutionIsLoading,
+    isError: evolutionIsError,
+  } = useQuery<PokeEvolutionChainResponse>({
+    queryKey: ["/evolution-chain/" + chainId],
+    enabled: !!chainId,
+  })
+
+  useEffect(() => {
+    if (speciesData) {
+      setChainId(speciesData.evolution_chain.url.split("/")[6])
+    }
+  }, [speciesData])
+
+  if (isLoading || speciesIsLoading || evolutionIsLoading || !chainId) {
     return (
       <>
         <Header />
@@ -94,11 +112,9 @@ export default function PokeDetails(props: PokeDetailsParams) {
     )
   }
 
-  if (isError || speciesIsError) {
+  if (isError || speciesIsError || evolutionIsError) {
     return <div>Error</div>
   }
-
-  const chainId = speciesData?.evolution_chain.url.split("/")[6]
 
   const types = data!.types.map((type) => type.type.name)
 
@@ -138,7 +154,7 @@ export default function PokeDetails(props: PokeDetailsParams) {
               <PokeStats key={stat.name} name={stat.name} value={stat.value} />
             ))}
           </div>
-          <PokeEvolutions chainId={chainId} pokemonId={pokemonId} />
+          <PokeEvolutions evolutionData={evolutionData} pokemonId={pokemonId} />
         </div>
       </main>
     </>

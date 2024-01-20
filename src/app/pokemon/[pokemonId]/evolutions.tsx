@@ -1,13 +1,12 @@
-import { useQuery } from "react-query"
 import { Fade } from "react-awesome-reveal"
 import { EvolutionLevel } from "./evolution-level"
 
 interface PokeEvolutionsProps {
-  chainId: string | undefined
+  evolutionData: PokeEvolutionChainResponse | undefined
   pokemonId: number
 }
 
-interface PokeEvolutionChainResponse {
+export interface PokeEvolutionChainResponse {
   chain: object
 }
 
@@ -56,24 +55,7 @@ const convertTreeToLevelsArray = (tree: any) => {
 }
 
 export function PokeEvolutions(props: PokeEvolutionsProps) {
-  const { chainId, pokemonId } = props
-
-  const {
-    data: evolutionData,
-    isLoading: evolutionIsLoading,
-    isError: evolutionIsError,
-  } = useQuery<PokeEvolutionChainResponse>({
-    queryKey: ["/evolution-chain/" + chainId],
-    enabled: !!chainId,
-  })
-
-  if (evolutionIsLoading) {
-    return <div className="skeleton h-[350px] lg:col-span-2"></div>
-  }
-
-  if (evolutionIsError) {
-    return <div>Error</div>
-  }
+  const { evolutionData, pokemonId } = props
 
   const chain = evolutionData?.chain
 

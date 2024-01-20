@@ -81,7 +81,13 @@ export default function Home(props: HomeProps) {
   }, [pokemon, records])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return (
+      <div className="flex flex-wrap items-start justify-center gap-4 lg:gap-8 py-8 h-full">
+        {Array.from({ length: 30 }).map((_, index) => (
+          <div key={index} className="w-28 lg:w-48 h-40 lg:h-64 skeleton" />
+        ))}
+      </div>
+    )
   }
 
   if (isError) {
