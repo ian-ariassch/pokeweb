@@ -82,7 +82,14 @@ export default function PokeDetails(props: PokeDetailsParams) {
     return (
       <>
         <Header />
-        <div>Loading...</div>
+        <div
+          className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr,3fr] px-6 py-4 lg:px-16 lg:py-8
+            xl:px-32 xl:py-16 h-[770px] lg:gap-8"
+        >
+          <div className="skeleton"></div>
+          <div className="skeleton"></div>
+          <div className="skeleton lg:col-span-2"></div>
+        </div>
       </>
     )
   }
@@ -111,7 +118,7 @@ export default function PokeDetails(props: PokeDetailsParams) {
   return (
     <>
       <Header />
-      <main className="px-6 py-4 lg:px-16 lg:py-8 xl:px-32 xl:py-16">
+      <main className={`px-6 py-4 lg:px-16 lg:py-8 xl:px-32 xl:py-16`}>
         <div
           id="gridContainer"
           className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr,3fr] lg:gap-8 [&>*]:rounded-xl
